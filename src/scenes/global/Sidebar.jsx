@@ -165,7 +165,6 @@ const Sidebars = () => {
                 style={{ backgroundColor: colors.primary[400] + " !important" }}
 
               />
-              
               {/* <DropdownItem
                 title="Edit Profile Member"
                 to="/Profile/edit"

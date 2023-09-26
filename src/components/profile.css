@@ -1,0 +1,112 @@
+.first{
+    width:250px ;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+}
+.main button{
+    background-color: aqua;
+    padding: 8px;
+    font-size: 15px;
+    border-radius: 10px;
+}
+.display{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.video{
+    width: 100%;
+    height: aut0;
+  
+}
+.one{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+.one h4{
+    font-weight: 500;
+}
+.video video {
+    width: 100%;
+   height: 250px;
+    padding: 0 10px;
+}
+.image{
+    width: 100%;
+    
+    padding: 0 10px;
+}
+.image div img{
+    width: 100%;
+    height: 250px;
+   
+}
+.first , .second , .third{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.character{
+    width: 100%;
+    padding: 0 10px;
+}
+.character h6{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+    font-weight: 500;
+}
+.price{
+    width: 100%; 
+    padding: 0 10px;
+}
+.prices div{
+    font-weight: 500;
+}
+.about{
+    width: 100%; 
+    padding: 0 10px;
+}
+.service , .avalaible{
+    width: 100%; 
+    padding: 0 10px;
+}
+.two{
+    width: 100%;
+}
+
+/* Apply styles when the screen width is 600px or less */
+@media screen and (min-width: 650px) {
+   .main{
+    display: flex !important;
+    flex-direction: row;
+    /* align-items: center !important; */
+    justify-content: space-around;
+    width: 100%;
+   
+   }
+   .one{
+    width: 30%;
+    /* background-color: aqua; */
+
+   }
+  
+   .two{
+    width: 55%;
+    /* margin-bottom: 40px; */
+    /* background-color: brown; */
+   }
+   
+}
+

@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Box, useTheme, Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { tokens } from "../../../theme";
-import Header from "../../../components/Header";
+import { tokens } from "../../theme";
+import Header from "../../components/Header";
 import Axios from "axios";
-import { API_URLS } from "../../../apiConfig";
-import EditIcon from "@mui/icons-material/Edit"; // Import the EditIcon
+import { API_URLS } from "../../apiConfig";
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-// import axios from "axios";
 
-const Team = () => {
-  const {profileId} = useParams();
-  
+const DelUser = () => {
+  const { id } = useParams();
+  console.log(id, "id");
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -21,7 +20,14 @@ const Team = () => {
 
   const fetchData = async () => {
     try {
-      const response = await Axios.get(`${API_URLS}/all-profiles`);
+      const { token } = JSON.parse(localStorage.getItem("admin") || "{}");
+      const config = {
+        headers: {
+          "x-auth-token": `Bearer ${token}`,
+        },
+      };
+      const response = await Axios.get(`${API_URLS}/admin/user`, config);
+      console.log(response);
       setData(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -34,11 +40,8 @@ const Team = () => {
 
   const getRowId = (row) => row._id;
 
-  const handleEditClick = (row) => {
-    console.log("Edit clicked for row:", row);
-  };
-
-  const handleDeleteClick = async ({_id}) => {
+  const handleDeleteClick = async (userId, isActive) => {
+    console.log("Delete clicked for row:", userId);
     try {
       const { token } = JSON.parse(localStorage.getItem("admin") || "{}");
       const config = {
@@ -46,69 +49,56 @@ const Team = () => {
           "x-auth-token": `Bearer ${token}`,
         },
       };
-      const response = await axios.delete(
-        `${API_URLS}/admin/delete-profile/${_id}`,
+      const response = await axios.patch(
+        `${API_URLS}/admin/user/${userId}`,
+        { isActive: !isActive },
         config
       );
-  
-      console.log(response, "res");
-      setData((prevData) => prevData.filter((profile) => profile._id !== _id));
+      console.log(response, "toggle");
+      // Assuming you want to refresh the data after toggling
+      fetchData();
     } catch (err) {
-      console.log(err, "delete");
+      console.log(err, "toggle");
     }
   };
-  
 
   const columns = [
     { field: "_id", headerName: "ID", flex: 1 },
-    { field: "name", headerName: "Name", flex: 1 },
-    { field: "title", headerName: "Title", flex: 1 },
-    { field: "city", headerName: "City", flex: 1 },
-    { field: "gender", headerName: "Gender", flex: 1 },
-    { field: "Nationality", headerName: "Nationality", flex: 1 },
-    { field: "education", headerName: "Education", flex: 1 },
-    { field: "specialityDegree", headerName: "Speciality Degree", flex: 1 },
-
+    { field: "profileId", headerName: "Profile ID", flex: 1 },
+    { field: "displayName", headerName: "Name", flex: 1 },
+    { field: "email", headerName: "Email", flex: 1 },
+    { field: "role", headerName: "Role", flex: 1 },
     {
-      field: "edit",
-      headerName: "Edit",
-      // flex: 1,
-      renderCell: (params) => (
-        <Button
-          variant="outlined"
-          color="warning"
-          onClick={() => handleEditClick(params.row._id)}
-          startIcon={<EditIcon />} // Use the EditIcon as the start icon
-        >
-          Edit
-        </Button>
-      ),
+      field: "isActive",
+      headerName: "Status",
+      flex: 1,
+      renderCell: (params) => {
+        const isActive = params.value;
+        return isActive ? "Active" : "Inactive";
+      },
     },
-
     {
-      field: "delete",
-      headerName: "Delete Profiles",
-      // flex: 1,
-      renderCell: (params) => (
-<Button
-  variant="outlined"
-  color="error"
-  onClick={() => handleDeleteClick(params.row)}
-  startIcon={<DeleteIcon />}
->
-  Delete
-</Button>
-
-      ),
+      field: "toggleStatus",
+      headerName: "Toggle Status",
+      renderCell: (params) => {
+        const isActive = params.row.isActive;
+        return (
+          <Button
+            variant="outlined"
+            color={isActive ? "error" : "warning"}
+            startIcon={isActive ? <DeleteIcon /> : <EditIcon />}
+            onClick={() => handleDeleteClick(params.row._id, isActive)}
+          >
+            {isActive ? "Disable" : "Enable"}
+          </Button>
+        );
+      },
     },
   ];
 
   return (
     <Box m={"20px"}>
-      <Header
-        title={"User Profiles"}
-        subtitle={"Edit or Delete User Profiles."}
-      />
+      <Header title={"Users"} subtitle={"View User."} />
       <Box
         m={"10px 0 0 0"}
         height={"70vh"}
@@ -144,4 +134,4 @@ const Team = () => {
   );
 };
 
-export default Team;
+export default DelUser;

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { API_URLS } from "../apiConfig";
 import { useParams } from "react-router-dom";
 import "./profile.css";
-import { Button } from "@mui/material";
+// import { Button } from "@mui/material";
 
 const Profile = () => {
   const [showAllImages, setShowAllImages] = useState(false);

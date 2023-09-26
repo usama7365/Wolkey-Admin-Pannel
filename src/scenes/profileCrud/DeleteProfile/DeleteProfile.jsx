@@ -8,11 +8,10 @@ import { API_URLS } from "../../../apiConfig";
 import EditIcon from "@mui/icons-material/Edit"; // Import the EditIcon
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 // import axios from "axios";
 
 const Team = () => {
-  const {profileId} = useParams();
   
 
   const theme = useTheme();

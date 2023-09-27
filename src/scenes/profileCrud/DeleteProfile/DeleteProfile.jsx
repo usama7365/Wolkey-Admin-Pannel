@@ -8,6 +8,9 @@ import { API_URLS } from "../../../apiConfig";
 import EditIcon from "@mui/icons-material/Edit"; // Import the EditIcon
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Import toast styles
+
 // import { useParams } from "react-router-dom";
 // import axios from "axios";
 
@@ -37,7 +40,7 @@ const Team = () => {
     console.log("Edit clicked for row:", row);
   };
 
-  const handleDeleteClick = async ({_id}) => {
+  const handleDeleteClick = async ({ _id }) => {
     try {
       const { token } = JSON.parse(localStorage.getItem("admin") || "{}");
       const config = {
@@ -50,12 +53,29 @@ const Team = () => {
         config
       );
   
-      console.log(response, "res");
-      setData((prevData) => prevData.filter((profile) => profile._id !== _id));
+      if (response.status === 200) {
+        // Show a success toast message
+        toast.success("Profile Deleted Successfully", {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+        });
+  
+        // Remove the deleted profile from the data state
+        setData((prevData) => prevData.filter((profile) => profile._id !== _id));
+      } else {
+        // Show an error toast message if the deletion fails
+        toast.error("Failed to Delete Profile", {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+        });
+      }
     } catch (err) {
       console.log(err, "delete");
     }
   };
+  
   
 
   const columns = [
@@ -139,6 +159,8 @@ const Team = () => {
       >
         <DataGrid rows={data} columns={columns} getRowId={getRowId} />
       </Box>
+      <ToastContainer position="top-right" autoClose={1500} hideProgressBar={false} />
+
     </Box>
   );
 };

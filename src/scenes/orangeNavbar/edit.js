@@ -6,11 +6,8 @@ import Header from "../../components/Header";
 import axios from "axios";
 import { API_URLS } from "../../apiConfig";
 import { useParams, useLocation } from "react-router-dom";
-// import { Link } from "react-router-dom";
 
-const initialValues = {
-  items: "",
-};
+
 
 const EditOrangeNav = () => {
   const { id } = useParams(); // Correctly extracts the 'id' from the URL

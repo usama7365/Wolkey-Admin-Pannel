@@ -9,6 +9,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import PersonOffIcon from '@mui/icons-material/PersonOff';
+import PersonIcon from '@mui/icons-material/Person';
 
 const DelUser = () => {
   const { id } = useParams();
@@ -55,12 +59,28 @@ const DelUser = () => {
         config
       );
       console.log(response, "toggle");
+      
+      // Show a success toast message
+      toast.success("User status updated successfully", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+      });
+  
       // Assuming you want to refresh the data after toggling
       fetchData();
     } catch (err) {
       console.log(err, "toggle");
+  
+      // Show an error toast message
+      toast.error("Failed to update user status", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+      });
     }
   };
+  
 
   const columns = [
     { field: "_id", headerName: "ID", flex: 1 },
@@ -86,7 +106,7 @@ const DelUser = () => {
           <Button
             variant="outlined"
             color={isActive ? "error" : "warning"}
-            startIcon={isActive ? <DeleteIcon /> : <EditIcon />}
+            startIcon={isActive ? <PersonOffIcon /> : <PersonIcon />}
             onClick={() => handleDeleteClick(params.row._id, isActive)}
           >
             {isActive ? "Disable" : "Enable"}
@@ -98,7 +118,7 @@ const DelUser = () => {
 
   return (
     <Box m={"20px"}>
-      <Header title={"Users"} subtitle={"View User."} />
+      <Header title={"Users"} subtitle={"Activate-DeActivate User."} />
       <Box
         m={"10px 0 0 0"}
         height={"70vh"}
@@ -130,6 +150,8 @@ const DelUser = () => {
       >
         <DataGrid rows={data} columns={columns} getRowId={getRowId} />
       </Box>
+      <ToastContainer position="top-right" autoClose={1500} hideProgressBar={false} />
+
     </Box>
   );
 };

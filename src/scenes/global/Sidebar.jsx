@@ -18,6 +18,10 @@ import GridViewIcon from "@mui/icons-material/GridView";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import CategoryIcon from '@mui/icons-material/Category';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
 // Define the DropdownItem component
 const DropdownItem = ({ title, to, icon, selected, setSelected }) => {
@@ -160,7 +164,7 @@ const Sidebars = () => {
               setSelected={setSelected}
             />
 
-            <SubMenu icon={<PeopleOutlinedIcon />} label="Profile">
+            <SubMenu icon={<AccountBoxIcon />} label="Profile">
               <DropdownItem
                 title="View Profiles"
                 to="/Profile/view"
@@ -210,7 +214,7 @@ const Sidebars = () => {
               />
             </SubMenu>
 
-            <SubMenu icon={<PeopleOutlinedIcon />} label="Filters">
+            <SubMenu icon={<FilterAltIcon />} label="Filters">
               <DropdownItem
                 title="View Filters"
                to='/Filter/view'
@@ -235,16 +239,16 @@ const Sidebars = () => {
               />
             </SubMenu>
 
-            <Item
+            {/* <Item
               title="Site Settings"
-              to="/"
+              // to="/"
               icon={<SettingsIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
+            /> */}
             {/* ........................Orange Navbar Items START......................... */}
 
-            <SubMenu icon={<PeopleOutlinedIcon />} label="Orange Navbar Items">
+            <SubMenu icon={<CategoryIcon />} label="Orange Navbar Items">
               <DropdownItem
                 title="View Navbar Items"
                 style={{ backgroundColor: "red !important" }}
@@ -263,27 +267,14 @@ const Sidebars = () => {
                 setSelected={setSelected}
               />
 
-              <DropdownItem
-                title="Edit Navbar Items"
-                to="/orange-menu/edit"
-                icon={<EditIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
-              <DropdownItem
-                title="Delete Navbar Items"
-                to="/Orange-menu/delete"
-                icon={<PersonRemoveIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
+             
             </SubMenu>
 
             {/* ........................Orange Navbar Items END......................... */}
 
             {/* ........................Green Navbar Items START......................... */}
 
-            <SubMenu icon={<PeopleOutlinedIcon />} label="Green Navbar Items">
+            <SubMenu icon={<CategoryIcon />} label="Green Navbar Items">
               <DropdownItem
                 title="View Navbar Items"
                 style={{ backgroundColor: "red !important" }}
@@ -302,27 +293,14 @@ const Sidebars = () => {
                 setSelected={setSelected}
               />
 
-              <DropdownItem
-                title="Edit Navbar Items"
-                to="/green-menu/edit"
-                icon={<EditIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
-              <DropdownItem
-                title="Delete Navbar Items"
-                to="/green-menu/delete"
-                icon={<PersonRemoveIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
+          
             </SubMenu>
             {/* ........................Green Navbar Items END......................... */}
 
             {/* ........................Registration Teacher Items START......................... */}
 
             <SubMenu
-              icon={<PeopleOutlinedIcon />}
+              icon={<AppRegistrationIcon />}
               label="Teacher Registration Items"
             >
               <DropdownItem
@@ -343,20 +321,7 @@ const Sidebars = () => {
                 setSelected={setSelected}
               />
 
-              <DropdownItem
-                title="Edit Teacher Items"
-                to="/teacher-menu/edit"
-                icon={<EditIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
-              <DropdownItem
-                title="Delete Teacher Items"
-                to="/teacher-menu/delete"
-                icon={<PersonRemoveIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
+            
             </SubMenu>
 
             {/* ........................Registration Teacher Items END......................... */}
@@ -364,7 +329,7 @@ const Sidebars = () => {
             {/* ........................Registration Agency Items START......................... */}
 
             <SubMenu
-              icon={<PeopleOutlinedIcon />}
+              icon={<AppRegistrationIcon />}
               label="Agency Registration Items"
             >
               <DropdownItem
@@ -385,27 +350,14 @@ const Sidebars = () => {
                 setSelected={setSelected}
               />
 
-              <DropdownItem
-                title="Edit Agency Items"
-                to="/Agency-menu/edit"
-                icon={<EditIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
-              <DropdownItem
-                title="Delete Agency Items"
-                to="/Agency-menu/delete"
-                icon={<PersonRemoveIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
+      
             </SubMenu>
             {/* ........................Registration Agency Items END......................... */}
 
             {/* ........................Registration Advisory Items START......................... */}
 
             <SubMenu
-              icon={<PeopleOutlinedIcon />}
+              icon={<AppRegistrationIcon />}
               label="Advisory Registration Items"
             >
               <DropdownItem
@@ -426,20 +378,7 @@ const Sidebars = () => {
                 setSelected={setSelected}
               />
 
-              <DropdownItem
-                title="Edit Advisory Items"
-                to="/Advisory-menu/edit"
-                icon={<EditIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
-              <DropdownItem
-                title="Delete Advisory Items"
-                to="/Advisory-menu/delete"
-                icon={<PersonRemoveIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
+        
             </SubMenu>
             {/* ........................Registration Advisory Items END......................... */}
 

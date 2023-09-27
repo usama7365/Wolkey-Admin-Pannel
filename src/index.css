@@ -37,3 +37,7 @@ background-color: #1F2A40;
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+a{
+  text-decoration: none !important;
+  color: aliceblue;
+}

@@ -1,15 +1,23 @@
 import React, { useState } from "react";
-import { Box, TextField, Button } from "@mui/material";
+import { Box, TextField, Button, IconButton, List, ListItem, ListItemText } from "@mui/material";
 import Header from "../../components/Header";
 import axios from "axios";
 import { API_URLS } from "../../apiConfig";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/Add";
 
 const Create = () => {
-  const [title, setTitle] = useState(""); // State to store the input values
-  const [features, setFeatures] = useState("");
-  const [buttons, setButtons] = useState("");
+  const [title, setTitle] = useState("");
+  const [features, setFeatures] = useState([]);
+  const [featureInput, setFeatureInput] = useState("");
+  const [buttons , setButtons] = useState('')
+  const [error, setError] = useState("");
 
   const handleCreate = async () => {
+    if (!title || features.length === 0 || !buttons) {
+      setError("Please fill in all fields.");
+      return;
+    }
     try {
       const { token } = JSON.parse(localStorage.getItem("admin") || "{}");
       const config = {
@@ -32,6 +40,19 @@ const Create = () => {
     }
   };
 
+  const addFeature = () => {
+    if (featureInput.trim() !== "") {
+      setFeatures([...features, featureInput]);
+      setFeatureInput(""); // Clear the input field
+    }
+  };
+
+  const removeFeature = (index) => {
+    const updatedFeatures = [...features];
+    updatedFeatures.splice(index, 1);
+    setFeatures(updatedFeatures);
+  };
+
   return (
     <Box m={"20px"}>
       <Header title={"Teacher"} subtitle={"Create a new item Orange Navbar."} />
@@ -41,7 +62,7 @@ const Create = () => {
         type="text"
         label="Title"
         value={title}
-        onChange={(e) => setTitle(e.target.value)} // Update state when input changes
+        onChange={(e) => setTitle(e.target.value)}
       />
       <TextField
         fullWidth
@@ -49,9 +70,26 @@ const Create = () => {
         type="text"
         label="Features"
         sx={{ mt: 2 }}
-        value={features}
-        onChange={(e) => setFeatures(e.target.value)} // Update state when input changes
+        value={featureInput} // Use featureInput for the input field value
+        onChange={(e) => setFeatureInput(e.target.value)} // Update featureInput state when input changes
+        InputProps={{
+          endAdornment: (
+            <IconButton onClick={addFeature} >
+              <AddIcon />
+            </IconButton>
+          ),
+        }}
       />
+      <List>
+        {features.map((feature, index) => (
+          <ListItem key={index}>
+            <ListItemText primary={feature} />
+            <IconButton onClick={() => removeFeature(index)} color="secondary">
+              <DeleteIcon />
+            </IconButton>
+          </ListItem>
+        ))}
+      </List>
       <TextField
         fullWidth
         variant="filled"
@@ -59,8 +97,9 @@ const Create = () => {
         label="Buttons"
         sx={{ mt: 2 }}
         value={buttons}
-        onChange={(e) => setButtons(e.target.value)} // Update state when input changes
+        onChange={(e) => setButtons(e.target.value)}
       />
+         {error && <div style={{ color: "red" }}>{error}</div>}
       <Box display="flex" justifyContent="end" mt="20px">
         <Button
           type="button"

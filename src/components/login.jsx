@@ -1,15 +1,19 @@
-import React, {  useState } from "react";
-import { Box, Button, Grid, TextField } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Button, Grid, TextField, IconButton, InputAdornment } from "@mui/material";
+import { ToastContainer, toast } from "react-toastify"; // Import toast notifications
+import "react-toastify/dist/ReactToastify.css"; // Import toast styles
 import axios from "axios";
 import { API_URLS } from "../apiConfig";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./navbar";
+import { Visibility, VisibilityOff } from "@mui/icons-material"; // Import icons for password visibility
 
 const Login = () => {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // State to track password visibility
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -17,6 +21,10 @@ const Login = () => {
 
   const handlePassword = (e) => {
     setPassword(e.target.value);
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword); // Toggle password visibility state
   };
 
   const handleLogin = async () => {
@@ -27,25 +35,41 @@ const Login = () => {
       });
       localStorage.setItem("admin", JSON.stringify(response.data));
       if (response.data.token) {
-        navigate("/Dashboard");
-      }
+        toast.success("Login Successful", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+        });
+        
+        // Delay the navigation by 3 seconds (3000 milliseconds)
+        setTimeout(() => {
+          navigate("/Dashboard");
+        }, 2000);
+      } 
     } catch (error) {
       console.log(error, "Apierror");
+      // Show an error toast if there is an API error
+      toast.error("Login Failed", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+      });
     }
   };
+  
 
   const theme = {
     btn: {
       border: "1px solid green",
       margin: "auto",
       marginTop: "20px",
-      padding:"5px 15px",
-      color:"white"
+      padding: "5px 15px",
+      color: "white",
     },
     center: {
-      width:"100%",
-      display:"flex",
-      justifyContent:"center"
+      width: "100%",
+      display: "flex",
+      justifyContent: "center",
     },
   };
 
@@ -75,9 +99,21 @@ const Login = () => {
             <TextField
               fullWidth
               variant="filled"
-              type="text"
+              type={showPassword ? "text" : "password"} // Toggle input type
               label="Password"
               onChange={handlePassword}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={togglePasswordVisibility}
+                      edge="end"
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />} {/* Show/hide password icon */}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
           </Grid>
           <Button onClick={handleLogin} style={theme.btn}>
@@ -85,6 +121,9 @@ const Login = () => {
           </Button>
         </Grid>
       </Box>
+
+      {/* Add the toast container */}
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
     </>
   );
 };

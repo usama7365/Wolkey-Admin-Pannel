@@ -7,12 +7,10 @@ import axios from "axios";
 import { API_URLS } from "../../apiConfig";
 import { useParams, useLocation } from "react-router-dom";
 
-const initialValues = {
-  items: "",
-};
+
 
 const EditGreenNav = () => {
-  const { id } = useParams(); // Correctly extracts the 'id' from the URL
+  const { id } = useParams(); 
   console.log(id, "params");
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const location = useLocation();

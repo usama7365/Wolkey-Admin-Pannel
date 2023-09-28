@@ -54,7 +54,8 @@ const EditTeacher = () => {
       };
       const response = await axios.put(
         `${API_URLS}/admin/teacher-menu/${id}`,
-        values
+        values,
+        config
       );
 
       console.log("Response from PUT request:", response);

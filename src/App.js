@@ -31,6 +31,7 @@ import EditGreenNav from "./scenes/greenNavbar/edit";
 import ViewTeacher from "./scenes/teacher/view";
 import ViewAgency from "./scenes/agency/view";
 import ViewAdvisor from "./scenes/advisor/view";
+
 import CreateFilter from "./scenes/filter/create";
 import ViewFilter from "./scenes/filter/view";
 import EditTeacher from "./scenes/teacher/edit";
@@ -73,8 +74,13 @@ function App() {
               <Route path="/green-menu/edit/:id" element={<EditGreenNav/>} />
               <Route path="/teacher-menu/create" element={<Create />} />
               <Route path="/teacher-menu/edit/:id" element={<EditTeacher/>} />
+
               <Route path="/Filter/create" element={<CreateFilter/>} />
               <Route path="/Filter/view" element={<ViewFilter/>} />
+
+
+              
+              
               <Route path="/teacher-menu/view" element={<ViewTeacher/>} />
               <Route path="Agency-menu/create" element={<CreateAgency />} />
               <Route path="Agency-menu/view" element={<ViewAgency />} />

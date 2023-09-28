@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Box, useTheme, Button } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
+// import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { API_URLS } from "../../apiConfig";
 import Header from "../../components/Header";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
+// import { Link } from "react-router-dom";  
 
 const ViewFilter = () => {
   const theme = useTheme();
@@ -35,7 +36,7 @@ const ViewFilter = () => {
       console.error("Error deleting item with ID", error);
     }
   };
-  const handleEditClick = () => [console.log("Edit")];
+  // const handleEditClick = () => [console.log("Edit")];
   const fetchData = async () => {
     try {
       const response = await axios.get(`${API_URLS}/admin/filters`);
@@ -50,29 +51,29 @@ const ViewFilter = () => {
   }, []);
 
   const columns = [
-    { field: "title", headerName: "Filters", flex: 1 },
+    { field: "title", headerName: "Filters", flex: 7 },
 
-    {
-      field: "edit",
-      headerName: "Edit",
-      flex: 1,
-      renderCell: (params) => (
-        <Button
-          variant="outlined"
-          color="warning"
-          startIcon={<EditIcon />}
-          onClick={() => handleEditClick(params.row)}
-        >
-          {/* <Link
-                to={`/green-menu/edit/${params.row._id}?title=${encodeURIComponent(
-                  params.row.title
-                )}`}
-              >
-                Edit
-              </Link> */}
-        </Button>
-      ),
-    },
+    // {
+    //   field: "edit",
+    //   headerName: "Edit",
+    //   flex: 1,
+    //   renderCell: (params) => (
+    //     <Button
+    //       variant="outlined"
+    //       color="warning"
+    //       startIcon={<EditIcon />}
+    //       onClick={() => handleEditClick(params.row)}
+    //     >
+    //       <Link
+    //             to={`/Filter/edit/${params.row._id}?title=${encodeURIComponent(
+    //               params.row.title
+    //             )}`}
+    //           >
+    //             Edit
+    //           </Link>
+    //     </Button>
+    //   ),
+    // },
     {
       field: "delete",
       headerName: "Delete",
@@ -93,7 +94,7 @@ const ViewFilter = () => {
 
   return (
     <Box m={"20px"}>
-      <Header title={"Green Navbar"} subtitle={"View Items in Green Navbar."} />
+      <Header title={"View Filters"} subtitle={"View Filter Items."} />
       <Box
         m={"10px 0 0 0"}
         height={"70vh"}

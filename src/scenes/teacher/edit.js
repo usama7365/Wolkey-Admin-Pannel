@@ -5,7 +5,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 import axios from "axios";
 import { API_URLS } from "../../apiConfig";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const EditTeacher = () => {
   const { id } = useParams();

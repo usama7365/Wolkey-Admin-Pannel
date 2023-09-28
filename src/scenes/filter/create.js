@@ -14,8 +14,8 @@ import axios from "axios";
 import { API_URLS } from "../../apiConfig";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+// import { toast, ToastContainer } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 
 
 const CreateFilter = () => {

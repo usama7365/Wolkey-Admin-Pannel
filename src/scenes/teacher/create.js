@@ -55,7 +55,7 @@ const Create = () => {
 
   return (
     <Box m={"20px"}>
-      <Header title={"Teacher"} subtitle={"Create a new item Orange Navbar."} />
+      <Header title={"Create Teacher Items"} subtitle={"Create a new Teacher Items"} />
       <TextField
         fullWidth
         variant="filled"

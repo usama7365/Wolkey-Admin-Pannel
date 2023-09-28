@@ -6,6 +6,7 @@ import Header from "../../components/Header";
 import axios from "axios";
 import { API_URLS } from "../../apiConfig";
 import { useParams, useLocation } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 
 
@@ -82,9 +83,9 @@ const EditOrangeNav = () => {
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
               <Button type="submit" color="secondary" variant="contained">
-                {/* <Link to='/Orange-menu/view'>
+                <Link to='/Orange-menu/view'>
                Save Changes
-               </Link> */}
+               </Link>
               </Button>
             </Box>
           </form>

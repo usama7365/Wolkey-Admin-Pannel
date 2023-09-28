@@ -34,6 +34,7 @@ import ViewAdvisor from "./scenes/advisor/view";
 
 import CreateFilter from "./scenes/filter/create";
 import ViewFilter from "./scenes/filter/view";
+
 import EditTeacher from "./scenes/teacher/edit";
 
 function App() {
@@ -41,22 +42,69 @@ function App() {
   const location = useLocation();
 
   // Determine whether to show the sidebar based on the current route
-  const showSidebar =  !location.pathname.startsWith("/profile/") &&
-  location.pathname !== "/login" &&
-  location.pathname !== "/"; //
+  const showSidebar =
+    !location.pathname.startsWith("/profile/") &&
+    location.pathname !== "/login" &&
+    location.pathname !== "/";
 
-  const showNavbar =  !location.pathname.startsWith("/profile/") &&
-  location.pathname !== "/login" &&
-  location.pathname !== "/"; //
+  const showNavbar =
+    !location.pathname.startsWith("/profile/") &&
+    location.pathname !== "/login" &&
+    location.pathname !== "/";
+
+  const containerStyle = {
+    display: "flex",
+    height: "100vh", // Set a fixed height for your container
+  };
+
+  const sidebarStyle = {
+    width: showSidebar ? "250px" : "0px", // Set the width based on whether the sidebar is shown
+    overflowX: "hidden", // Hide both x and y overflow
+    transition: "width 0.5s", // Add transition for smooth width change
+    // Add any other styles you need for your sidebar
+  };
+
+  // Calculate the content width based on whether the sidebar is shown
+  const contentStyle = {
+    flex: showSidebar ? "1" : "auto", // Adjust flex property
+    // Apply overflow-y: auto; to make it scrollable when needed
+    overflowY: "auto",
+    transition: "flex 0.5s", // Add transition for smooth width change
+  };
+
+  // Custom scrollbar styles for webkit-based browsers
+  const customScrollbarStyles = `
+    ::-webkit-scrollbar {
+      width: 8px; /* Width of the scrollbar */
+    }
+    ::-webkit-scrollbar-track {
+      background: #141B2D; /* Color of the scrollbar track */
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #141B2D; /* Color of the scrollbar thumb */
+      border-radius: 4px; /* Rounded corners of the thumb */
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #555; /* Color of the scrollbar thumb on hover */
+    }
+  `;
+
+  // Apply custom scrollbar styles using a style tag
+  const styleTag = document.createElement("style");
+  styleTag.innerHTML = customScrollbarStyles;
+  document.head.appendChild(styleTag);
 
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <div className="app">
-          {showSidebar && <Sidebars />}
-          <main className="content">
+        <div className="app" style={containerStyle}>
+          <div className="sidebar" style={sidebarStyle}>
+            {showSidebar && <Sidebars />}
+          </div>
+          <main className="content" style={contentStyle}>
             {showNavbar && <Topbar />}
+
             <Routes>
               <Route path="/" element={<Login/>} />
               <Route path="/login" element={<Login/>} />
@@ -96,7 +144,7 @@ function App() {
               <Route path="/line" element={<Line />} />
               <Route path="/geography" element={<Geography />} />
               <Route path="/profile/:profileId" element={<Profile />} />
-            </Routes>
+              </Routes>
           </main>
         </div>
       </ThemeProvider>

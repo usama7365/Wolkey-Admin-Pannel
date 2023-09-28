@@ -5,7 +5,7 @@ import { tokens } from "../../../theme";
 import Header from "../../../components/Header";
 import Axios from "axios";
 import { API_URLS } from "../../../apiConfig";
-import EditIcon from "@mui/icons-material/Edit"; // Import the EditIcon
+// import EditIcon from "@mui/icons-material/Edit"; // Import the EditIcon
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -36,9 +36,9 @@ const Team = () => {
 
   const getRowId = (row) => row._id;
 
-  const handleEditClick = (row) => {
-    console.log("Edit clicked for row:", row);
-  };
+  // const handleEditClick = (row) => {
+  //   console.log("Edit clicked for row:", row);
+  // };
 
   const handleDeleteClick = async ({ _id }) => {
     try {
@@ -88,21 +88,21 @@ const Team = () => {
     { field: "education", headerName: "Education", flex: 1 },
     { field: "specialityDegree", headerName: "Speciality Degree", flex: 1 },
 
-    {
-      field: "edit",
-      headerName: "Edit",
-      // flex: 1,
-      renderCell: (params) => (
-        <Button
-          variant="outlined"
-          color="warning"
-          onClick={() => handleEditClick(params.row._id)}
-          startIcon={<EditIcon />} // Use the EditIcon as the start icon
-        >
-          Edit
-        </Button>
-      ),
-    },
+    // {
+    //   field: "edit",
+    //   headerName: "Edit",
+    //   // flex: 1,
+    //   renderCell: (params) => (
+    //     <Button
+    //       variant="outlined"
+    //       color="warning"
+    //       onClick={() => handleEditClick(params.row._id)}
+    //       startIcon={<EditIcon />} // Use the EditIcon as the start icon
+    //     >
+    //       Edit
+    //     </Button>
+    //   ),
+    // },
 
     {
       field: "delete",

@@ -146,7 +146,7 @@ const CreateFilter = () => {
             checked={selectedCheckbox === "Dropdown"}
             onChange={handleCheckboxChange}
             name="Dropdown"
-            color="primary"
+            // color="primary"
           />
         }
         label="Dropdown"
@@ -157,7 +157,7 @@ const CreateFilter = () => {
             checked={selectedCheckbox === "Input"}
             onChange={handleCheckboxChange}
             name="Input"
-            color="primary"
+            // color="primary"
           />
         }
         label="Input"

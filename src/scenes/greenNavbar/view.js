@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
-import { Box, useTheme, Button } from "@mui/material";
+import { Box, useTheme, Button, Typography } from "@mui/material";
 import { API_URLS } from "../../apiConfig";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
@@ -102,6 +102,9 @@ const ViewGreenNav = () => {
   return (
     <Box m={"20px"}>
       <Header title={"Green Navbar"} subtitle={"View Items in Green Navbar."} />
+      <Typography variant="body2" color="textSecondary">
+        Only 2 items will show in User portal
+      </Typography>
       <Box
         m={"10px 0 0 0"}
         height={"70vh"}

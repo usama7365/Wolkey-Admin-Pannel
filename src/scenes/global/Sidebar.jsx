@@ -6,14 +6,14 @@ import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 // import SettingsIcon from "@mui/icons-material/Settings";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
-import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
-import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
-import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
-import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
+// import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
+// import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
+// import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
+// import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
+// import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
+// import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
+// import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import GridViewIcon from "@mui/icons-material/GridView";
 import AddIcon from "@mui/icons-material/Add";
 // import EditIcon from "@mui/icons-material/Edit";
@@ -206,7 +206,7 @@ const Sidebars = () => {
                 setSelected={setSelected}
               /> */}
               <DropdownItem
-                title="Delete Users"
+                title="Users settings"
                 to="/User/delete/_:id"
                 icon={<PersonRemoveIcon />}
                 selected={selected}
@@ -358,10 +358,10 @@ const Sidebars = () => {
 
             <SubMenu
               icon={<AppRegistrationIcon />}
-              label="Advisory Registration Items"
+              label="Advisor Registration Items"
             >
               <DropdownItem
-                title="View Advisory Items"
+                title="View Advisor Items"
                 style={{ backgroundColor: "red !important" }}
                 to="/Advisory-menu/view"
                 icon={<GridViewIcon />}
@@ -370,7 +370,7 @@ const Sidebars = () => {
               />
 
               <DropdownItem
-                title="Create Advisory Items"
+                title="Create Advisor Items"
                 style={{ backgroundColor: "red !important" }}
                 to="/Advisory-menu/create"
                 icon={<AddIcon />}
@@ -382,7 +382,7 @@ const Sidebars = () => {
             </SubMenu>
             {/* ........................Registration Advisory Items END......................... */}
 
-            <SubMenu label="Pages" icon={<CalendarTodayOutlinedIcon />}>
+            {/* <SubMenu label="Pages" icon={<CalendarTodayOutlinedIcon />}>
               <DropdownItem
                 title="Profile Form"
                 to="/form"
@@ -404,9 +404,9 @@ const Sidebars = () => {
                 selected={selected}
                 setSelected={setSelected}
               />
-            </SubMenu>
+            </SubMenu> */}
 
-            <SubMenu label="Charts" icon={<BarChartOutlinedIcon />}>
+            {/* <SubMenu label="Charts" icon={<BarChartOutlinedIcon />}>
               <DropdownItem
                 title="Bar Chart"
                 to="/bar"
@@ -435,7 +435,7 @@ const Sidebars = () => {
                 selected={selected}
                 setSelected={setSelected}
               />
-            </SubMenu>
+            </SubMenu> */}
           </Box>
         </Menu>
       </Sidebar>

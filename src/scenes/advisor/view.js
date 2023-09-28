@@ -97,7 +97,7 @@ const ViewAdvisor = () => {
 
   return (
     <Box m={"20px"}>
-      <Header title={"Green Navbar"} subtitle={"View Items in Green Navbar."} />
+      <Header title={"View Advisor Items"} subtitle={"View Advisor Items."} />
       <Box
         m={"10px 0 0 0"}
         height={"70vh"}

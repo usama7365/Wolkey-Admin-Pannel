@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import { Formik } from "formik";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
@@ -32,8 +32,10 @@ const  CreategreenForm = () => {
 
   return (
     <Box m={"20px"}>
-      <Header title={"Green Navbar"} subtitle={"Create a new item in Green Navbar."} />
-
+      <Header title={"Green Navbar"} subtitle={"Create a new item in Green Navbar."}  />
+      <Typography variant="body2" color="textSecondary">
+        Only 2 items will show in User portal
+      </Typography>
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={initialValues}

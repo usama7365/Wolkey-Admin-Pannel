@@ -96,7 +96,7 @@ const ViewTeacher = () => {
 
   return (
     <Box m={"20px"}>
-      <Header title={"Green Navbar"} subtitle={"View Items in Green Navbar."} />
+      <Header title={"View Teacher Items"} subtitle={"View Teacher Items."} />
       <Box
         m={"10px 0 0 0"}
         height={"70vh"}

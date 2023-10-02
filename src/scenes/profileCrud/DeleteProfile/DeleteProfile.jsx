@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, useTheme, Button } from "@mui/material";
+import { Box, useTheme, Button, CircularProgress } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
 import Header from "../../../components/Header";
@@ -20,6 +20,8 @@ const Team = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [data, setData] = useState([]);
+  const [isLoadingDelete, setIsLoadingDelete] = useState(false);
+
 
   const fetchData = async () => {
     try {
@@ -42,6 +44,8 @@ const Team = () => {
 
   const handleDeleteClick = async ({ _id }) => {
     try {
+      setIsLoadingDelete(true); // Start loading
+
       const { token } = JSON.parse(localStorage.getItem("admin") || "{}");
       const config = {
         headers: {
@@ -73,6 +77,8 @@ const Team = () => {
       }
     } catch (err) {
       console.log(err, "delete");
+    } finally {
+      setIsLoadingDelete(false);
     }
   };
   
@@ -114,9 +120,11 @@ const Team = () => {
   color="error"
   onClick={() => handleDeleteClick(params.row)}
   startIcon={<DeleteIcon />}
+  disabled={isLoadingDelete} 
 >
-  Delete
+  {isLoadingDelete ? <CircularProgress size={24} color="secondary" /> : "Delete" }
 </Button>
+
 
       ),
     },
@@ -126,7 +134,7 @@ const Team = () => {
     <Box m={"20px"}>
       <Header
         title={"User Profiles"}
-        subtitle={"Edit or Delete User Profiles."}
+        subtitle={"Delete User Profiles."}
       />
       <Box
         m={"10px 0 0 0"}

@@ -1,44 +1,39 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
-import { Box, useTheme, Button, Typography, CircularProgress } from "@mui/material";
+import { Box, useTheme, Button, Typography, CircularProgress} from "@mui/material";
 import { API_URLS } from "../../apiConfig";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import { DataGrid } from "@mui/x-data-grid";
-import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Link } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 
-const ViewOrangeNav = () => {
+const ViewMetaTags = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [data, setData] = useState([]);
-  const [deleteLoading, setDeleteLoading] = useState({}); // Object to store loading state for each delete button
-
   // const { id } = useParams();
   // const navigate = useNavigate();
 
+  const handleEditClick = (row) => {
+    console.log("Edit clicked for row:", row);
+  };
+  const [loading, setLoading] = useState({});
 
   const showSuccessToast = (message) => {
     toast.success(message);
   };
-  
+
   const showErrorToast = (message) => {
     toast.error(message);
   };
   
 
-  const handleEditClick = (row) => {
-    console.log("Edit clicked for row:", row);
-  };
-
   const handleDelClick = async ({ _id }) => {
     try {
-      // Set loading state for the clicked delete button
-      setDeleteLoading((prevLoading) => ({ ...prevLoading, [_id]: true }));
+      setLoading((prevLoading) => ({ ...prevLoading, [_id]: true }));
   
       const { token } = JSON.parse(localStorage.getItem("admin") || "{}");
       const config = {
@@ -47,31 +42,32 @@ const ViewOrangeNav = () => {
         },
       };
       const response = await Axios.delete(
-        `${API_URLS}/admin/orange-menu/${_id}`,
+        `${API_URLS}/admin/delete-meta-tags/${_id}`,
         config
       );
+  
       if (response.status === 200) {
-        // Display a success toast when item is deleted
-        showSuccessToast(`Deleted item successfully`);
         setData((prevData) => prevData.filter((item) => item._id !== _id));
+        console.log(`Deleted Meta Tag with ID ${_id}`);
+        showSuccessToast("Meta Tag deleted successfully"); // Show success toast
       } else {
-        showErrorToast(`Failed to delete item `);
+        console.error(`Failed to delete Meta Tag with ID ${_id}`);
+        showErrorToast("Failed to delete Meta Tag"); // Show error toast
       }
     } catch (error) {
-      console.error("Error deleting item with ID", error);
-      // Display an error toast when there's an error
-      showErrorToast(`Error deleting item `);
+      console.error("Error deleting Meta Tag with ID", error);
+      showErrorToast("An error occurred while deleting the Meta Tag"); // Show error toast
     } finally {
-      // Reset loading state for the clicked delete button
-      setDeleteLoading((prevLoading) => ({ ...prevLoading, [_id]: false }));
+      setLoading((prevLoading) => ({ ...prevLoading, [_id]: false }));
     }
   };
+  
   
   
 
   const fetchData = async () => {
     try {
-      const response = await Axios.get(`${API_URLS}/admin/orange-menu`);
+      const response = await Axios.get(`${API_URLS}/admin/view-meta-tags`);
       console.log(response);
       setData(response.data);
     } catch (error) {
@@ -81,44 +77,51 @@ const ViewOrangeNav = () => {
 
   const columns = [
     { field: "title", headerName: "Title", flex: 1 },
+    { field: "description", headerName: "description", flex: 1 },
+    { field: "keywords", headerName: "keywords", flex: 1 },
+
+    // {
+    //   field: "edit",
+    //   headerName: "Edit",
+    //   flex: 1,
+    //   renderCell: (params) => (
+    //     <Button
+    //       variant="outlined"
+    //       color="warning"
+    //       startIcon={<EditIcon />}
+    //       onClick={() => handleEditClick(params.row)}
+    //     >
+    //       <Link
+    //         to={`/green-menu/edit/${params.row._id}?title=${encodeURIComponent(
+    //           params.row.title
+    //         )}`}
+    //       >
+    //         Edit
+    //       </Link>
+    //     </Button>
+    //   ),
+    // },
     {
-      field: "edit",
-      headerName: "Edit",
+      field: "delete",
+      headerName: "Delete",
       flex: 1,
       renderCell: (params) => (
         <Button
-          variant="outlined"
-          color="warning"
-          startIcon={<EditIcon />}
-          onClick={() => handleEditClick(params.row)}
-        >
-          <Link
-            to={`/orange-menu/edit/${params.row._id}?title=${encodeURIComponent(
-              params.row.title
-            )}`}
-          >
-            Edit
-          </Link>
-        </Button>
+        variant="outlined"
+        color="error"
+        startIcon={<DeleteIcon />}
+        onClick={() => handleDelClick(params.row)}
+        disabled={loading[params.row._id]}
+      >
+        {loading[params.row._id] ? (
+          <CircularProgress size={24} color="primary" />
+        ) : (
+          "Delete"
+        )}
+      </Button>
+      
       ),
     },
-{
-  field: "delete",
-  headerName: "Delete",
-  flex: 1,
-  renderCell: (params) => (
-    <Button
-      variant="outlined"
-      color="error"
-      startIcon={<DeleteIcon />}
-      onClick={() => handleDelClick(params.row)}
-      disabled={deleteLoading[params.row._id]} // Disable the button when loading
-    >
-      {deleteLoading[params.row._id] ? <CircularProgress size={24} color="secondary" /> : "Delete"}
-    </Button>
-  ),
-},
-
   ];
 
   useEffect(() => {
@@ -129,12 +132,9 @@ const ViewOrangeNav = () => {
 
   return (
     <Box m={"20px"}>
-      <Header
-        title={"Orange Navbar"}
-        subtitle={"View Items in Orange Navbar."}
-      />
-        <Typography variant="body2" color="textSecondary">
-        Only 7 items show in User portal
+      <Header title={"View Meta Tags"} subtitle={"View Meta Tags"} />
+      <Typography variant="body2" color="textSecondary">
+        Only 2 items will show in User portal
       </Typography>
       <Box
         m={"10px 0 0 0"}
@@ -168,9 +168,8 @@ const ViewOrangeNav = () => {
         <DataGrid rows={data} columns={columns} getRowId={getRowId} />
       </Box>
       <ToastContainer position="top-right" autoClose={1500} hideProgressBar={false} />
-
     </Box>
   );
 };
 
-export default ViewOrangeNav;
+export default ViewMetaTags;

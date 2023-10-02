@@ -1,21 +1,28 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Box, useTheme, Button } from "@mui/material";
-// import EditIcon from "@mui/icons-material/Edit";
+import { Box, useTheme, Button, CircularProgress } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { API_URLS } from "../../apiConfig";
 import Header from "../../components/Header";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-// import { Link } from "react-router-dom";  
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ViewFilter = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [data, setData] = useState([]);
+  const [loadingStates, setLoadingStates] = useState({});
 
   const handleDelClick = async ({ _id }) => {
     try {
+      // Start loading for this specific row
+      setLoadingStates((prevState) => ({
+        ...prevState,
+        [_id]: true,
+      }));
+
       const { token } = JSON.parse(localStorage.getItem("admin") || "{}");
       const config = {
         headers: {
@@ -28,15 +35,35 @@ const ViewFilter = () => {
       );
       if (response.status === 200) {
         setData((prevData) => prevData.filter((item) => item._id !== _id));
-        console.log(`Deleted item with ID ${_id}`);
+        toast.success("Item deleted successfully", {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+        });
       } else {
         console.error(`Failed to delete item with ID ${_id}`);
+        toast.error("Failed to delete item", {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+        });
       }
     } catch (error) {
       console.error("Error deleting item with ID", error);
+      toast.error("Error deleting item", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+      });
+    } finally {
+      // Stop loading for this specific row
+      setLoadingStates((prevState) => ({
+        ...prevState,
+        [_id]: false,
+      }));
     }
   };
-  // const handleEditClick = () => [console.log("Edit")];
+
   const fetchData = async () => {
     try {
       const response = await axios.get(`${API_URLS}/admin/filters`);
@@ -52,28 +79,6 @@ const ViewFilter = () => {
 
   const columns = [
     { field: "title", headerName: "Filters", flex: 7 },
-
-    // {
-    //   field: "edit",
-    //   headerName: "Edit",
-    //   flex: 1,
-    //   renderCell: (params) => (
-    //     <Button
-    //       variant="outlined"
-    //       color="warning"
-    //       startIcon={<EditIcon />}
-    //       onClick={() => handleEditClick(params.row)}
-    //     >
-    //       <Link
-    //             to={`/Filter/edit/${params.row._id}?title=${encodeURIComponent(
-    //               params.row.title
-    //             )}`}
-    //           >
-    //             Edit
-    //           </Link>
-    //     </Button>
-    //   ),
-    // },
     {
       field: "delete",
       headerName: "Delete",
@@ -82,19 +87,25 @@ const ViewFilter = () => {
         <Button
           variant="outlined"
           color="error"
-          startIcon={<DeleteIcon />} // Use the EditIcon as the start icon
-          onClick={() => handleDelClick(params.row)} // Handle the edit action here
+          startIcon={<DeleteIcon />}
+          onClick={() => handleDelClick(params.row)}
+          disabled={loadingStates[params.row._id] || false} // Disable the button when loading
         >
-          Delete
+          {loadingStates[params.row._id] ? (
+            <CircularProgress size={24} color="secondary" />
+          ) : (
+            "Delete"
+          )}
         </Button>
       ),
     },
   ];
+
   const getRowId = (row) => row._id;
 
   return (
     <Box m={"20px"}>
-      <Header title={"View Filters"} subtitle={"View Filter Items."} />
+      <Header title={"View Filters"} subtitle={"View and delete Filter Items."} />
       <Box
         m={"10px 0 0 0"}
         height={"70vh"}
@@ -126,6 +137,7 @@ const ViewFilter = () => {
       >
         <DataGrid rows={data} columns={columns} getRowId={getRowId} />
       </Box>
+      <ToastContainer position="top-right" autoClose={1500} hideProgressBar={false} />
     </Box>
   );
 };

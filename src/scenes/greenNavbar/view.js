@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
-import { Box, useTheme, Button, Typography } from "@mui/material";
+import { Box, useTheme, Button, Typography, CircularProgress} from "@mui/material";
 import { API_URLS } from "../../apiConfig";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
@@ -8,6 +8,9 @@ import { DataGrid } from "@mui/x-data-grid";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 const ViewGreenNav = () => {
   const theme = useTheme();
@@ -19,9 +22,21 @@ const ViewGreenNav = () => {
   const handleEditClick = (row) => {
     console.log("Edit clicked for row:", row);
   };
+  const [loading, setLoading] = useState({});
+
+  const showSuccessToast = (message) => {
+    toast.success(message);
+  };
+
+  const showErrorToast = (message) => {
+    toast.error(message);
+  };
+  
 
   const handleDelClick = async ({ _id }) => {
     try {
+      setLoading((prevLoading) => ({ ...prevLoading, [_id]: true }));
+  
       const { token } = JSON.parse(localStorage.getItem("admin") || "{}");
       const config = {
         headers: {
@@ -32,16 +47,24 @@ const ViewGreenNav = () => {
         `${API_URLS}/admin/green-menu/${_id}`,
         config
       );
+  
       if (response.status === 200) {
         setData((prevData) => prevData.filter((item) => item._id !== _id));
         console.log(`Deleted item with ID ${_id}`);
+        showSuccessToast("Item deleted successfully"); // Show success toast
       } else {
         console.error(`Failed to delete item with ID ${_id}`);
+        showErrorToast("Failed to delete item"); // Show error toast
       }
     } catch (error) {
       console.error("Error deleting item with ID", error);
+      showErrorToast("An error occurred while deleting the item"); // Show error toast
+    } finally {
+      setLoading((prevLoading) => ({ ...prevLoading, [_id]: false }));
     }
   };
+  
+  
 
   const fetchData = async () => {
     try {
@@ -82,13 +105,19 @@ const ViewGreenNav = () => {
       flex: 1,
       renderCell: (params) => (
         <Button
-          variant="outlined"
-          color="error"
-          startIcon={<DeleteIcon />} // Use the EditIcon as the start icon
-          onClick={() => handleDelClick(params.row)} // Handle the edit action here
-        >
-          Delete
-        </Button>
+        variant="outlined"
+        color="error"
+        startIcon={<DeleteIcon />}
+        onClick={() => handleDelClick(params.row)}
+        disabled={loading[params.row._id]}
+      >
+        {loading[params.row._id] ? (
+          <CircularProgress size={24} color="primary" />
+        ) : (
+          "Delete"
+        )}
+      </Button>
+      
       ),
     },
   ];
@@ -136,6 +165,7 @@ const ViewGreenNav = () => {
       >
         <DataGrid rows={data} columns={columns} getRowId={getRowId} />
       </Box>
+      <ToastContainer position="top-right" autoClose={1500} hideProgressBar={false} />
     </Box>
   );
 };

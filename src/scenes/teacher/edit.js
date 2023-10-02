@@ -68,7 +68,7 @@ const EditTeacher = () => {
   return (
     <Box m={"20px"}>
       <Header title={"Teacher"} subtitle={"Edit Teacher."} />
-      // ... (previous code)
+   
 
 <Formik initialValues={teacherData} onSubmit={handleFormSubmit}>
   {({ handleSubmit, handleChange, values }) => (

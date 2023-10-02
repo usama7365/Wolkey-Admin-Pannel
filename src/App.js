@@ -37,6 +37,11 @@ import ViewFilter from "./scenes/filter/view";
 
 import EditTeacher from "./scenes/teacher/edit";
 
+import CreateMetaTags from "./scenes/metaTags/CreateMetaTags"
+import ViewMetaTags from "./scenes/metaTags/ViewMetaTags"
+
+
+
 function App() {
   const [theme, colorMode] = useMode();
   const location = useLocation();
@@ -127,6 +132,13 @@ function App() {
               <Route path="/Filter/view" element={<ViewFilter/>} />
 
 
+              <Route path="/CreateMetaTags" element={<CreateMetaTags/>} />
+
+              <Route path="/ViewMetaTags" element={<ViewMetaTags/>} />
+
+
+
+              
               
               
               <Route path="/teacher-menu/view" element={<ViewTeacher/>} />

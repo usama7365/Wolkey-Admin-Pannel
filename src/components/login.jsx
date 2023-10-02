@@ -1,19 +1,20 @@
 import React, { useState } from "react";
-import { Box, Button, Grid, TextField, IconButton, InputAdornment } from "@mui/material";
-import { ToastContainer, toast } from "react-toastify"; // Import toast notifications
-import "react-toastify/dist/ReactToastify.css"; // Import toast styles
+import { Box, Button, Grid, TextField, IconButton, InputAdornment, CircularProgress } from "@mui/material";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { API_URLS } from "../apiConfig";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./navbar";
-import { Visibility, VisibilityOff } from "@mui/icons-material"; // Import icons for password visibility
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const Login = () => {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false); // State to track password visibility
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // State to track loading
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -24,11 +25,13 @@ const Login = () => {
   };
 
   const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword); // Toggle password visibility state
+    setShowPassword(!showPassword);
   };
 
   const handleLogin = async () => {
     try {
+      setIsLoading(true); // Start loading
+
       const response = await axios.post(`${API_URLS}/admin/login`, {
         email,
         password,
@@ -40,23 +43,22 @@ const Login = () => {
           autoClose: 1000,
           hideProgressBar: false,
         });
-        
-        // Delay the navigation by 3 seconds (3000 milliseconds)
+
         setTimeout(() => {
           navigate("/Dashboard");
         }, 2000);
-      } 
+      }
     } catch (error) {
       console.log(error, "Apierror");
-      // Show an error toast if there is an API error
       toast.error("Login Failed", {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 1500,
         hideProgressBar: false,
       });
+    } finally {
+      setIsLoading(false); // Stop loading (whether successful or failed)
     }
   };
-  
 
   const theme = {
     btn: {
@@ -99,7 +101,7 @@ const Login = () => {
             <TextField
               fullWidth
               variant="filled"
-              type={showPassword ? "text" : "password"} // Toggle input type
+              type={showPassword ? "text" : "password"}
               label="Password"
               onChange={handlePassword}
               InputProps={{
@@ -109,21 +111,20 @@ const Login = () => {
                       onClick={togglePasswordVisibility}
                       edge="end"
                     >
-                      {showPassword ? <Visibility /> : <VisibilityOff />} {/* Show/hide password icon */}
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
                     </IconButton>
                   </InputAdornment>
                 ),
               }}
             />
           </Grid>
-          <Button onClick={handleLogin} style={theme.btn}>
-            Login
+          <Button onClick={handleLogin} style={theme.btn} disabled={isLoading}>
+            {isLoading ?  <CircularProgress style={{color:"#4CCEAC"}} size={24} />  : "Login"}
           </Button>
         </Grid>
       </Box>
 
-      {/* Add the toast container */}
-      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
+      <ToastContainer position="top-right" autoClose={1500} hideProgressBar={false} />
     </>
   );
 };

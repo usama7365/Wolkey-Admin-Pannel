@@ -1,12 +1,12 @@
 import React from "react";
-import { Box, Button, IconButton, useTheme, Typography } from "@mui/material";
+import { Box, IconButton, useTheme, Typography } from "@mui/material";
 import { tokens } from "../../theme";
 import { mockTransactions } from "../../data/mockData";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
-import EmailIcon from "@mui/icons-material/Email";
-import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
+// import EmailIcon from "@mui/icons-material/Email";
+// import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import TrafficIcon from "@mui/icons-material/Traffic";
+// import TrafficIcon from "@mui/icons-material/Traffic";
 import Header from "../../components/Header";
 import StatBox from "../../components/StatBox";
 import LineChart from "../../components/LineChart";
@@ -23,7 +23,7 @@ const Dashboard = () => {
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
 
-        <Box>
+        {/* <Box>
           <Button
             sx={{
               backgroundColor: colors.blueAccent[700],
@@ -36,7 +36,7 @@ const Dashboard = () => {
             <DownloadOutlinedIcon sx={{ mr: "10px" }} />
             Download Reports
           </Button>
-        </Box>
+        </Box> */}
       </Box>
 
       {/* GRID & CHARTS */}
@@ -55,12 +55,12 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="12,361"
-            subtitle="Emails Sent"
+            title="Users"
+            subtitle="22"
             progress="0.75"
             increase="+14%"
             icon={
-              <EmailIcon
+              <PersonAddIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
@@ -74,12 +74,12 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="431,225"
-            subtitle="Sales Obtained"
+            title="Teachers"
+            subtitle="120"
             progress="0.50"
             increase="+21%"
             icon={
-              <PointOfSaleIcon
+              <PersonAddIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
@@ -93,8 +93,8 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="32,441"
-            subtitle="New Clients"
+            title="Agencies"
+            subtitle="1234"
             progress="0.30"
             increase="+5%"
             icon={
@@ -112,12 +112,12 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="1,325,134"
-            subtitle="Traffic Received"
+            title="Visitors"
+            subtitle="87 "
             progress="0.80"
             increase="+43%"
             icon={
-              <TrafficIcon
+              <PersonAddIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }

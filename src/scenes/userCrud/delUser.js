@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, useTheme, Button } from "@mui/material";
+import { Box, useTheme, Button, CircularProgress } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
@@ -21,6 +21,9 @@ const DelUser = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [data, setData] = useState([]);
+  const [isLoadingMap, setIsLoadingMap] = useState({});
+
+
 
   const fetchData = async () => {
     try {
@@ -47,6 +50,8 @@ const DelUser = () => {
   const handleDeleteClick = async (userId, isActive) => {
     console.log("Delete clicked for row:", userId);
     try {
+      setIsLoadingMap((prev) => ({ ...prev, [userId]: true })); // Start loading for this user
+
       const { token } = JSON.parse(localStorage.getItem("admin") || "{}");
       const config = {
         headers: {
@@ -78,6 +83,8 @@ const DelUser = () => {
         autoClose: 1500,
         hideProgressBar: false,
       });
+    } finally {
+      setIsLoadingMap((prev) => ({ ...prev, [userId]: false })); // Stop loading for this user (whether successful or failed)
     }
   };
   
@@ -104,13 +111,22 @@ const DelUser = () => {
         const isActive = params.row.isActive;
         return (
           <Button
-            variant="outlined"
-            color={isActive ? "error" : "warning"}
-            startIcon={isActive ? <PersonOffIcon /> : <PersonIcon />}
-            onClick={() => handleDeleteClick(params.row._id, isActive)}
-          >
-            {isActive ? "Disable" : "Enable"}
-          </Button>
+          variant="outlined"
+          color={isActive ? "error" : "warning"}
+          startIcon={isActive ? <PersonOffIcon /> : <PersonIcon />}
+          onClick={() => handleDeleteClick(params.row._id, isActive)}
+          disabled={isLoadingMap[params.row._id]} // Disable the button when loading for this user
+        >
+          {isLoadingMap[params.row._id] ? (
+            <CircularProgress size={24} color="secondary" />
+          ) : isActive ? (
+            "Disable"
+          ) : (
+            "Enable"
+          )}
+        </Button>
+        
+        
         );
       },
     },

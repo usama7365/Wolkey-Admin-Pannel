@@ -22,6 +22,8 @@ import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import CategoryIcon from '@mui/icons-material/Category';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
+import StyleIcon from '@mui/icons-material/Style';
 
 // Define the DropdownItem component
 const DropdownItem = ({ title, to, icon, selected, setSelected }) => {
@@ -382,29 +384,28 @@ const Sidebars = () => {
             </SubMenu>
             {/* ........................Registration Advisory Items END......................... */}
 
-            {/* <SubMenu label="Pages" icon={<CalendarTodayOutlinedIcon />}>
+
+
+
+
+            <SubMenu label="SEO Settings" icon={< SettingsSuggestIcon/>}>
               <DropdownItem
-                title="Profile Form"
-                to="/form"
-                icon={<PersonOutlinedIcon />}
+                title="Create Meta Tags"
+                to="/CreateMetaTags"
+                icon={<StyleIcon />}
                 selected={selected}
                 setSelected={setSelected}
               />
-              <DropdownItem
-                title="Calendar"
-                to="/calendar"
-                icon={<CalendarTodayOutlinedIcon />}
+
+            <DropdownItem
+                title="View Meta Tags"
+                style={{ backgroundColor: "red !important" }}
+                to="/ViewMetaTags"
+                icon={<StyleIcon />}
                 selected={selected}
                 setSelected={setSelected}
               />
-              <DropdownItem
-                title="FAQ Page"
-                to="/faq"
-                icon={<HelpOutlineOutlinedIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
-            </SubMenu> */}
+            </SubMenu>
 
             {/* <SubMenu label="Charts" icon={<BarChartOutlinedIcon />}>
               <DropdownItem

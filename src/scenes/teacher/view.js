@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Box, useTheme, Button } from "@mui/material";
+import { Box, useTheme, Button, CircularProgress } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { API_URLS } from "../../apiConfig";
@@ -8,14 +8,27 @@ import Header from "../../components/Header";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { Link } from "react-router-dom";
+import { ToastContainer,toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ViewTeacher = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [data, setData] = useState([]);
+  const [deleteLoading, setDeleteLoading] = useState({}); // Object to store loading state for each delete button
+
+
+  const showSuccessToast = (message) => {
+    toast.success(message);
+  };
+  
+  const showErrorToast = (message) => {
+    toast.error(message);
+  };
 
   const handleDelClick = async ({ _id }) => {
     try {
+      setDeleteLoading((prevLoading) => ({ ...prevLoading, [_id]: true }));
       const { token } = JSON.parse(localStorage.getItem("admin") || "{}");
       const config = {
         headers: {
@@ -27,13 +40,19 @@ const ViewTeacher = () => {
         config
       );
       if (response.status === 200) {
+        // Display a success toast when item is deleted
+        showSuccessToast(`Deleted item successfully`);
         setData((prevData) => prevData.filter((item) => item._id !== _id));
-        console.log(`Deleted item with ID ${_id}`);
       } else {
-        console.error(`Failed to delete item with ID ${_id}`);
+        showErrorToast(`Failed to delete item with ID ${_id}`);
       }
     } catch (error) {
       console.error("Error deleting item with ID", error);
+      // Display an error toast when there's an error
+      showErrorToast(`Error deleting item `);
+    } finally {
+      // Reset loading state for the clicked delete button
+      setDeleteLoading((prevLoading) => ({ ...prevLoading, [_id]: false }));
     }
   };
   
@@ -82,13 +101,14 @@ const ViewTeacher = () => {
       flex: 1,
       renderCell: (params) => (
         <Button
-          variant="outlined"
-          color="error"
-          startIcon={<DeleteIcon />} // Use the EditIcon as the start icon
-          onClick={() => handleDelClick(params.row)} // Handle the edit action here
-        >
-          Delete
-        </Button>
+        variant="outlined"
+        color="error"
+        startIcon={<DeleteIcon />}
+        onClick={() => handleDelClick(params.row)}
+        disabled={deleteLoading[params.row._id]} // Disable the button when loading
+      >
+        {deleteLoading[params.row._id] ? <CircularProgress size={24} color="secondary" /> : "Delete"}
+      </Button>
       ),
     },
   ];
@@ -128,6 +148,8 @@ const ViewTeacher = () => {
       >
         <DataGrid rows={data} columns={columns} getRowId={getRowId} />
       </Box>
+      <ToastContainer position="top-right" autoClose={1500} hideProgressBar={false} />
+
     </Box>
   );
 };

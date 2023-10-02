@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField,CircularProgress } from "@mui/material";
 import { Formik } from "formik";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 import axios from "axios";
 import { API_URLS } from "../../apiConfig";
 import { useParams, useLocation } from "react-router-dom";
-import {Link} from "react-router-dom"
+// import {Link} from "react-router-dom"
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 
 
@@ -19,9 +22,13 @@ const EditGreenNav = () => {
   const initialTitle = queryParams.get("title");
 
   const [title, setTitle] = useState(initialTitle);
+  const [loading, setLoading] = useState(false);
 
-  const handleFormSubmit = async (values) => { // Remove the 'id' parameter here
+
+  const handleFormSubmit = async (values) => {
     try {
+      setLoading(true); // Set loading state to true
+  
       const { token } = JSON.parse(localStorage.getItem("admin") || "{}");
       const config = {
         headers: {
@@ -29,19 +36,28 @@ const EditGreenNav = () => {
         },
       };
       const response = await axios.put(
-        `${API_URLS}/admin/green-menu/${id}`, // Use 'id' directly in the URL
+        `${API_URLS}/admin/green-menu/${id}`,
         {
           title: values.items,
         },
         config
       );
-
-      console.log("Response from PUT request:", response);
-      console.log("Updated title:", values.items);
+  
+      if (response.status === 200) {
+        toast.success("Item updated successfully");
+        console.log("Response from PUT request:", response);
+        console.log("Updated title:", values.items);
+      } else {
+        toast.error("Failed to update item");
+        console.error("Failed to update item:", response);
+      }
     } catch (error) {
-      console.error(error);
+        } finally {
+      setLoading(false); // Set loading state to false after API request is completed
     }
   };
+  
+  
 
   useEffect(() => {
     setTitle(initialTitle);
@@ -50,8 +66,8 @@ const EditGreenNav = () => {
   return (
     <Box m={"20px"}>
       <Header
-        title={"Orange Navbar"}
-        subtitle={"Edit an item in Orange Navbar."}
+        title={"Green Navbar"}
+        subtitle={"Edit an item in Green Navbar."}
       />
 
       <Formik
@@ -82,15 +98,16 @@ const EditGreenNav = () => {
               />
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
-              <Button type="submit" color="secondary" variant="contained">
-                <Link to='/Orange-menu/view'>
-               Save Changes
-               </Link>
-              </Button>
+            <Button type="submit" color="secondary" variant="contained" disabled={loading}>
+  {loading ? <CircularProgress size={24} color="primary" /> : "Save Changes"}
+</Button>
+
             </Box>
           </form>
         )}
       </Formik>
+      <ToastContainer position="top-right" autoClose={1500} hideProgressBar={false} />
+
     </Box>
   );
 };

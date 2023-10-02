@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField, CircularProgress } from "@mui/material";
 import { Formik } from "formik";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 import axios from "axios";
 import { API_URLS } from "../../apiConfig";
 import { useParams, useLocation } from "react-router-dom";
-import {Link} from "react-router-dom";
+// import {Link} from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 
 
@@ -17,11 +20,22 @@ const EditOrangeNav = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const initialTitle = queryParams.get("title");
-
   const [title, setTitle] = useState(initialTitle);
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleFormSubmit = async (values) => { // Remove the 'id' parameter here
+  const showSuccessToast = (message) => {
+    toast.success(message);
+  };
+  
+  const showErrorToast = (message) => {
+    toast.error(message);
+  };
+  
+
+  const handleFormSubmit = async (values) => {
     try {
+      setSubmitting(true); // Start the loading state for the button
+  
       const { token } = JSON.parse(localStorage.getItem("admin") || "{}");
       const config = {
         headers: {
@@ -29,19 +43,30 @@ const EditOrangeNav = () => {
         },
       };
       const response = await axios.put(
-        `${API_URLS}/admin/orange-menu/${id}`, // Use 'id' directly in the URL
+        `${API_URLS}/admin/orange-menu/${id}`,
         {
           title: values.items,
         },
         config
       );
-
-      console.log("Response from PUT request:", response);
-      console.log("Updated title:", values.items);
+  
+      if (response.status === 200) {
+        showSuccessToast("Item updated successfully");
+        console.log("Response from PUT request:", response);
+        console.log("Updated title:", values.items);
+      } else {
+        showErrorToast("Failed to update item");
+        console.error("Failed to update item:", response);
+      }
     } catch (error) {
-      console.error(error);
+      showErrorToast("An error occurred while updating item");
+      console.error("Error updating item:", error);
+    } finally {
+      setSubmitting(false); // End the loading state for the button
     }
   };
+  
+  
 
   useEffect(() => {
     setTitle(initialTitle);
@@ -81,16 +106,26 @@ const EditOrangeNav = () => {
                 value={values.items}
               />
             </Box>
+    
+
             <Box display="flex" justifyContent="end" mt="20px">
-              <Button type="submit" color="secondary" variant="contained">
-                <Link to='/Orange-menu/view'>
-               Save Changes
-               </Link>
-              </Button>
-            </Box>
+  <Button
+    type="submit"
+    color="secondary"
+    variant="contained"
+    disabled={submitting} // Disable the button while submitting
+  >
+    {submitting ? <CircularProgress size={24} color="primary" /> : "Save Changes"}
+  </Button>
+</Box>
+
+
+
           </form>
         )}
       </Formik>
+      <ToastContainer position="top-right" autoClose={1500} hideProgressBar={false} />
+
     </Box>
   );
 };

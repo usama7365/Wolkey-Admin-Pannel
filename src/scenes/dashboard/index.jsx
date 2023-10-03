@@ -94,7 +94,7 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="Total Teachers"
+            title="Teachers"
             subtitle={roleCounts.find((role) => role.role === 'teacher')?.count || 0}
             progress="0.50"
             increase="+21%"

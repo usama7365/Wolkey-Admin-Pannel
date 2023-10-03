@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Box, IconButton, useTheme, Typography } from "@mui/material";
 import { tokens } from "../../theme";
 import { mockTransactions } from "../../data/mockData";
@@ -13,10 +13,30 @@ import LineChart from "../../components/LineChart";
 import ProgressCircle from "../../components/ProgressCircle";
 import BarChart from "../../components/BarChart";
 import GeographyChart from "../../components/GeographyChart";
+import axios from 'axios';
+import { API_URLS } from "../../apiConfig";
+
 
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const [roleCounts, setRoleCounts] = React.useState([]);
+
+  useEffect(() => {
+    const fetchRoleCounts = async () => {
+      try {
+        const response = await axios.get(`${API_URLS}/admin/role-counts`); // Adjust the URL as needed
+        setRoleCounts(response.data);
+      } catch (error) {
+        console.error('Error fetching role counts:', error);
+      }
+    };
+  
+    fetchRoleCounts();
+  }, []);
+  
+
   return (
     <Box m="20px">
       {/* HEADER */}
@@ -55,8 +75,8 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="Users"
-            subtitle="22"
+            title="Total Users"
+            subtitle={roleCounts.find((role) => role.role === 'Total Users')?.count || 0}
             progress="0.75"
             increase="+14%"
             icon={
@@ -74,8 +94,8 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="Teachers"
-            subtitle="120"
+            title="Total Teachers"
+            subtitle={roleCounts.find((role) => role.role === 'teacher')?.count || 0}
             progress="0.50"
             increase="+21%"
             icon={
@@ -94,7 +114,7 @@ const Dashboard = () => {
         >
           <StatBox
             title="Agencies"
-            subtitle="1234"
+            subtitle={roleCounts.find((role) => role.role === 'agency')?.count || 0}
             progress="0.30"
             increase="+5%"
             icon={
@@ -113,7 +133,7 @@ const Dashboard = () => {
         >
           <StatBox
             title="Visitors"
-            subtitle="87 "
+            subtitle={roleCounts.find((role) => role.role === 'advisor')?.count || 0}
             progress="0.80"
             increase="+43%"
             icon={

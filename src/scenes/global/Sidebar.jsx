@@ -182,18 +182,18 @@ const Sidebars = () => {
                 selected={selected}
                 setSelected={setSelected}
               /> */}
-              <DropdownItem
+              {/* <DropdownItem
                 title="Delete Profiles"
                 to="/Profile/delete/"
                 icon={<PersonRemoveIcon />}
                 selected={selected}
                 setSelected={setSelected}
-              />
+              /> */}
             </SubMenu>
 
             <SubMenu icon={<PeopleOutlinedIcon />} label="User">
               <DropdownItem
-                title="View User"
+                title="Users settings"
                 to="/User/view"
                 icon={<GridViewIcon />}
                 selected={selected}
@@ -207,13 +207,13 @@ const Sidebars = () => {
                 selected={selected}
                 setSelected={setSelected}
               /> */}
-              <DropdownItem
+              {/* <DropdownItem
                 title="Users settings"
                 to="/User/delete/_:id"
                 icon={<PersonRemoveIcon />}
                 selected={selected}
                 setSelected={setSelected}
-              />
+              /> */}
             </SubMenu>
 
             <SubMenu icon={<FilterAltIcon />} label="Filters">

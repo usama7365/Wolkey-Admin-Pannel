@@ -4,7 +4,7 @@ import Sidebars from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard/index";
 import Login from "./components/login";
 import Team from "./scenes/team/Team";
-import DeleteProfile from "./scenes/profileCrud/DeleteProfile/DeleteProfile";
+// import DeleteProfile from "./scenes/profileCrud/DeleteProfile/DeleteProfile";
 import ViewProfile from "./scenes/profileCrud/ViewProfile/ViewProfile";
 import Invoices from "./scenes/invoices/Invoices";
 import Form from "./scenes/form/Form";
@@ -17,7 +17,7 @@ import Geography from "./scenes/geography/Geography";
 import { ColorModeContext, useMode } from "./theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import ViewUser from "./scenes/userCrud/viewUser";
-import DelUser from "./scenes/userCrud/delUser";
+// import DelUser from "./scenes/userCrud/delUser";
 import Profile from "./components/Profile";
 import CreateOrangeForm from "./scenes/orangeNavbar/create";
 import CreategreenForm from "./scenes/greenNavbar/create";
@@ -115,10 +115,13 @@ function App() {
               <Route path="/login" element={<Login/>} />
               <Route path="/Dashboard" element={<Dashboard />} />
               <Route path="/team" element={<Team />} />
-              <Route path="/User/delete/:id" element={<DelUser />} />
+              {/* <Route path="/User/delete/:id" element={<DelUser />} /> */}
               <Route path="/Profile/view" element={<ViewProfile />} />
-              <Route path="/Profile/delete" element={<DeleteProfile />} />
-              <Route path="/Profile/delete/:profileId" element={<DeleteProfile />} />
+              <Route path="/Profile/view/:id" element={<ViewProfile />} />
+
+
+              {/* <Route path="/Profile/delete" element={<DeleteProfile />} /> */}
+              {/* <Route path="/Profile/delete/:profileId" element={<DeleteProfile />} /> */}
               <Route path="/Orange-menu/create"element={<CreateOrangeForm/>}/>
               <Route path="/Orange-menu/view" element={<ViewOrangeNav />} />
               <Route path="/orange-menu/edit/:id" element={<EditOrangeNav />} />

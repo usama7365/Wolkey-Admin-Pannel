@@ -17,14 +17,17 @@ const Topbar = () => {
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
 
-  
   const handleLogoutClick = () => {
+    // Clear the local storage
+    localStorage.clear();
+  
     // Navigate to the default route (login)
     window.location.replace("/");
-    
+  
     // Clear the session history
     window.history.replaceState(null, "", "/");
   };
+  
   return (
     <Box display="flex" justifyContent="space-between" p={2}>
       {/* SEARCH BAR */}
@@ -56,7 +59,7 @@ const Topbar = () => {
           <SettingsOutlinedIcon />
         </IconButton> */}
 
-        <IconButton onClick={handleLogoutClick}>
+<IconButton onClick={handleLogoutClick}>
     <LogoutIcon />
   </IconButton>
 

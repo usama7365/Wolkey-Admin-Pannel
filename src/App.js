@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Route, useLocation, Routes } from "react-router-dom";
 import Topbar from "./scenes/global/Topbar";
 import Sidebars from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard/index";
@@ -39,7 +39,6 @@ function App() {
   const [theme, colorMode] = useMode();
   const location = useLocation();
 
-  // Determine whether to show the sidebar based on the current route
   const showSidebar =
     !location.pathname.startsWith("/profile/") &&
     location.pathname !== "/login" &&
@@ -59,10 +58,8 @@ function App() {
     width: showSidebar ? "250px" : "0px", // Set the width based on whether the sidebar is shown
     overflowX: "hidden", // Hide both x and y overflow
     transition: "width 0.5s", // Add transition for smooth width change
-    // Add any other styles you need for your sidebar
   };
 
-  // Calculate the content width based on whether the sidebar is shown
   const contentStyle = {
     flex: showSidebar ? "1" : "auto", // Adjust flex property
     // Apply overflow-y: auto; to make it scrollable when needed
@@ -70,7 +67,6 @@ function App() {
     transition: "flex 0.5s", // Add transition for smooth width change
   };
 
-  // Custom scrollbar styles for webkit-based browsers
   const customScrollbarStyles = `
     ::-webkit-scrollbar {
       width: 8px; /* Width of the scrollbar */
@@ -87,7 +83,6 @@ function App() {
     }
   `;
 
-  // Apply custom scrollbar styles using a style tag
   const styleTag = document.createElement("style");
   styleTag.innerHTML = customScrollbarStyles;
   document.head.appendChild(styleTag);
@@ -97,47 +92,47 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app" style={containerStyle}>
-          <div className="sidebar" style={sidebarStyle}>{" "}{showSidebar && <Sidebars />}{" "}
-          </div>{" "}
-          <main className="content" style={contentStyle}>{" "}{showNavbar && <Topbar />}
+          <div className="sidebar" style={sidebarStyle}>{showSidebar && <Sidebars />}
+          </div>
+          <main className="content" style={contentStyle}>{showNavbar && <Topbar />}
             <Routes>
-              <Route path="/" element={<Login />} />{" "}
-              <Route path="/login" element={<Login />} />{" "}
-              <Route path="/Dashboard" element={<Dashboard />} />{" "}
-              <Route path="/team" element={<Team />} />{" "}
-              <Route path="/Profile/view" element={<ViewProfile />} />{" "}
-              <Route path="/Profile/view/:id" element={<ViewProfile />} />{" "}
-              <Route path="/Orange-menu/create" element={<CreateOrangeForm />}/>{" "}
-              <Route path="/Orange-menu/view" element={<ViewOrangeNav />} />{" "}
-              <Route path="/orange-menu/edit/:id" element={<EditOrangeNav />} />{" "}
-              <Route path="/green-menu/create" element={<CreategreenForm />} />{" "}
-              <Route path="/green-menu/view" element={<ViewGreenNav />} />{" "}
-              <Route path="/green-menu/edit/:id" element={<EditGreenNav />} />{" "}
-              <Route path="/teacher-menu/create" element={<Create />} />{" "}
-              <Route path="/teacher-menu/edit/:id" element={<EditTeacher />} />{" "}
-              <Route path="/Filter/create" element={<CreateFilter />} />{" "}
-              <Route path="/Filter/view" element={<ViewFilter />} />{" "}
-              <Route path="/CreateMetaTags" element={<CreateMetaTags />} />{" "}
-              <Route path="/ViewMetaTags" element={<ViewMetaTags />} />{" "}
-              <Route path="/teacher-menu/view" element={<ViewTeacher />} />{" "}
-              <Route path="Agency-menu/create" element={<CreateAgency />} />{" "}
-              <Route path="Agency-menu/view" element={<ViewAgency />} />{" "}
-              <Route path="Advisory-menu/create" element={<AdvisorCreate />} />{" "}
-              <Route path="Advisory-menu/view" element={<ViewAdvisor />} />{" "}
-              <Route path="/User/view" element={<ViewUser />} />{" "}
-              <Route path="/invoices" element={<Invoices />} />{" "}
-              <Route path="/form" element={<Form />} />{" "}
-              <Route path="/calendar" element={<Calendar />} />{" "}
-              <Route path="/faq" element={<FAQ />} />{" "}
-              <Route path="/bar" element={<Bar />} />{" "}
-              <Route path="/pie" element={<Pie />} />{" "}
-              <Route path="/line" element={<Line />} />{" "}
-              <Route path="/geography" element={<Geography />} />{" "}
-              <Route path="/profile/:profileId" element={<Profile />} />{" "}
-            </Routes>{" "}
-          </main>{" "}
-        </div>{" "}
-      </ThemeProvider>{" "}
+              <Route path="/" element={<Login />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/Dashboard" element={<Dashboard />} />
+              <Route path="/team" element={<Team />} />
+              <Route path="/Profile/view" element={<ViewProfile />} />
+              <Route path="/Profile/view/:id" element={<ViewProfile />} />
+              <Route path="/Orange-menu/create" element={<CreateOrangeForm />}/>
+              <Route path="/Orange-menu/view" element={<ViewOrangeNav />} />
+              <Route path="/orange-menu/edit/:id" element={<EditOrangeNav />} />
+              <Route path="/green-menu/create" element={<CreategreenForm />} />
+              <Route path="/green-menu/view" element={<ViewGreenNav />} />
+              <Route path="/green-menu/edit/:id" element={<EditGreenNav />} />
+              <Route path="/teacher-menu/create" element={<Create />} />
+              <Route path="/teacher-menu/edit/:id" element={<EditTeacher />} />
+              <Route path="/Filter/create" element={<CreateFilter />} />
+              <Route path="/Filter/view" element={<ViewFilter />} />
+              <Route path="/CreateMetaTags" element={<CreateMetaTags />} />
+              <Route path="/ViewMetaTags" element={<ViewMetaTags />} />
+              <Route path="/teacher-menu/view" element={<ViewTeacher />} />
+              <Route path="Agency-menu/create" element={<CreateAgency />} />
+              <Route path="Agency-menu/view" element={<ViewAgency />} />
+              <Route path="Advisory-menu/create" element={<AdvisorCreate />} />
+              <Route path="Advisory-menu/view" element={<ViewAdvisor />} />
+              <Route path="/User/view" element={<ViewUser />} />
+              <Route path="/invoices" element={<Invoices />} />
+              <Route path="/form" element={<Form />} />
+              <Route path="/calendar" element={<Calendar />} />
+              <Route path="/faq" element={<FAQ />} />
+              <Route path="/bar" element={<Bar />} />
+              <Route path="/pie" element={<Pie />} />
+              <Route path="/line" element={<Line />} />
+              <Route path="/geography" element={<Geography />} />
+              <Route path="/profile/:profileId" element={<Profile />} />
+            </Routes>
+          </main>
+        </div>
+      </ThemeProvider>
     </ColorModeContext.Provider>
   );
 }

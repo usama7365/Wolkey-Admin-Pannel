@@ -17,9 +17,9 @@ const ViewMetaTags = () => {
   // const { id } = useParams();
   // const navigate = useNavigate();
 
-  const handleEditClick = (row) => {
-    console.log("Edit clicked for row:", row);
-  };
+  // const handleEditClick = (row) => {
+  //   console.log("Edit clicked for row:", row);
+  // };
   const [loading, setLoading] = useState({});
 
   const showSuccessToast = (message) => {

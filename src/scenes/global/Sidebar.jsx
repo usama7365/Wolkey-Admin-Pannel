@@ -1,22 +1,13 @@
-import React, { useState } from "react"; // Make sure to import React
+import React, { useState } from "react";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
-// import SettingsIcon from "@mui/icons-material/Settings";
-// import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-// import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
-// import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
-// import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
-// import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
-// import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-// import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import GridViewIcon from "@mui/icons-material/GridView";
 import AddIcon from "@mui/icons-material/Add";
-// import EditIcon from "@mui/icons-material/Edit";
 import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import CategoryIcon from '@mui/icons-material/Category';
@@ -166,9 +157,9 @@ const Sidebars = () => {
               setSelected={setSelected}
             />
 
-            <SubMenu icon={<AccountBoxIcon />} label="Profile">
+            <SubMenu icon={<AccountBoxIcon />} label="Profiles">
               <DropdownItem
-                title="View Profiles"
+                title="Profiles Settings"
                 to="/Profile/view"
                 icon={<GridViewIcon />}
                 selected={selected}
@@ -191,7 +182,7 @@ const Sidebars = () => {
               /> */}
             </SubMenu>
 
-            <SubMenu icon={<PeopleOutlinedIcon />} label="User">
+            <SubMenu icon={<PeopleOutlinedIcon />} label="Users">
               <DropdownItem
                 title="Users settings"
                 to="/User/view"

@@ -51,20 +51,20 @@ function App() {
 
   const containerStyle = {
     display: "flex",
-    height: "100vh", // Set a fixed height for your container
+    height: "100vh",
   };
 
   const sidebarStyle = {
-    width: showSidebar ? "250px" : "0px", // Set the width based on whether the sidebar is shown
-    overflowX: "hidden", // Hide both x and y overflow
-    transition: "width 0.5s", // Add transition for smooth width change
+    width: showSidebar ? "250px" : "0px", 
+    overflowX: "hidden", 
+    transition: "width 0.5s",
   };
 
   const contentStyle = {
-    flex: showSidebar ? "1" : "auto", // Adjust flex property
-    // Apply overflow-y: auto; to make it scrollable when needed
+    flex: showSidebar ? "1" : "auto", 
+
     overflowY: "auto",
-    transition: "flex 0.5s", // Add transition for smooth width change
+    transition: "flex 0.5s", 
   };
 
   const customScrollbarStyles = `
